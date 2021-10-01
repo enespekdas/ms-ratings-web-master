@@ -1,0 +1,20 @@
+name: Sonarqube Test
+
+on: [push]
+
+jobs:
+  copy_files_job:
+    runs-on: ubuntu-latest
+    name: Testing Sonarqube
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        with:
+          args: >
+            -Dsonar.projectKey=enespekdas_ms-ratings-web-master
+            -Dsonar.organization=enespekdas
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
