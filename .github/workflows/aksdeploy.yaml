@@ -60,4 +60,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Run Helm Command
         run: 'helm upgrade -i -f charts/values.yaml ratings-web-prod --values charts/values-prod.yaml charts/ -n ratings-app-prod'
+      - name: Get Kubernetes Components
+        run: kubectl get all --namespace=ratings-app-prod
+        
       
