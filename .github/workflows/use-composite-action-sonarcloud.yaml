@@ -1,0 +1,20 @@
+name: Sonarqube Test
+
+on: [push]
+
+jobs:
+  copy_files_job:
+    runs-on: ubuntu-latest
+    name: Testing Sonarqube
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - id: SonarCloudTester
+        uses: enespekdas/composite-action-buildah@v1.1
+        with:
+          SonarCloud_Project_Key: enespekdas_ms-ratings-web-master
+          SonarCloud_Organizaton_Name: enespekdas
+      - run: echo  ${{ steps.SonarCloudTester.outputs.Result }} 
+        shell: bash
+      - run: echo " Selam , bitti"
+        shell: bash
