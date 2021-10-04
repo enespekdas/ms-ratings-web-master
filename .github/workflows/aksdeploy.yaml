@@ -1,0 +1,35 @@
+name: Docker
+
+on: [push]
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: quay.io
+  USER_NAME: swoturkey
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: swoturkey/ratings-web
+
+
+
+jobs:
+ 
+  deployToTest:
+    #if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Set context for Kubernetes 
+        uses: Azure/k8s-set-context@v1
+        with:
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Run Helm Command
+        run: 'helm upgrade -i -f charts/values.yaml ratings-web-test --values charts/values-test.yaml charts/ -n ratings-app-test'
+      - uses: act10ns/slack@v1
+        with: 
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
