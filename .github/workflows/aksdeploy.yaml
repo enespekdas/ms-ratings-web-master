@@ -42,7 +42,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Run Helm Command
-        run: 'helm upgrade -i -f charts/values.yaml ratings-web-test --values charts/values-test.yaml charts/ -n ratings-app-test'
+        run: 'helm upgrade -i -f charts/values.yaml ratings-web-test --values charts/values-test.yaml charts/ -n ratings-app-test . --set foo=baz'
       
  
   deployToProd:
