@@ -10,10 +10,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - id: SonarCloudTester
-        uses: enespekdas/composite-action-sonarcloud@v1.1
+        uses: enespekdas/composite-action-sonarcloud@v1.2
         with:
           SonarCloud_Project_Key: enespekdas_ms-ratings-web-master
           SonarCloud_Organizaton_Name: enespekdas
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: echo  ${{ steps.SonarCloudTester.outputs.Result }} 
         shell: bash
       - run: echo " Selam , bitti"
