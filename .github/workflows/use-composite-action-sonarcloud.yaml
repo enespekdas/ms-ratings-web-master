@@ -6,16 +6,24 @@ jobs:
   copy_files_job:
     runs-on: ubuntu-latest
     name: Testing Sonarqube
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
     steps:
+       
+       
       - name: Checkout repository
         uses: actions/checkout@v2
+      - run: echo $SONAR_TOKEN , $GITHUB_TOKEN
+        shell: bash 
       - id: SonarCloudTester
         uses: enespekdas/composite-action-sonarcloud@v1.3
         with:
           SonarCloud_Project_Key: enespekdas_ms-ratings-web-master
           SonarCloud_Organizaton_Name: enespekdas
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: $SONAR_TOKEN
+          GITHUB_TOKEN: $GITHUB_TOKEN
       - run: echo  ${{ steps.SonarCloudTester.outputs.Result }} 
         shell: bash
       - run: echo " Selam , bitti"
