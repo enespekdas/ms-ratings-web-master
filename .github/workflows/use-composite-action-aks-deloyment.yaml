@@ -1,0 +1,31 @@
+name: Sonarqube Test
+
+on: [push]
+
+jobs:
+  Aks_Deployment_Job:
+    runs-on: ubuntu-latest
+    name: Testing Aks Deployment
+    env:
+      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+      REGISTRY: quay.io
+      USER_NAME: swoturkey
+      IMAGE_NAME: swoturkey/ratings-web
+    steps:
+       
+       
+      - name: Checkout repository
+        uses: actions/checkout@v2
+    
+       
+      - id: AksDeploymentTest
+        uses: enespekdas/composite-action-aksdeployment@v1.0
+        with:
+          REGISTRY: $REGISTRY
+          USER_NAME: $USER_NAME
+          IMAGE_NAME: $IMAGE_NAME
+          KUBE_CONFIG: $KUBE_CONFIG
+      - run: echo  ${{ steps.AksDeploymentTest.outputs.Result }} 
+        shell: bash
+      - run: echo " Selam , bitti"
+        shell: bash
