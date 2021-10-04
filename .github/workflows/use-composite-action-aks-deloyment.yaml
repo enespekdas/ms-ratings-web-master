@@ -1,4 +1,4 @@
-name: Sonarqube Test
+name: AKS Deployment Test
 
 on: [push]
 
