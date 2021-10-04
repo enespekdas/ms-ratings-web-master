@@ -25,6 +25,7 @@ jobs:
           USER_NAME: $USER_NAME
           IMAGE_NAME: $IMAGE_NAME
           KUBE_CONFIG: $KUBE_CONFIG
+        if: failure()
       - run: echo  ${{ steps.AksDeploymentTest.outputs.Result }} 
         shell: bash
       - run: echo " Selam , bitti"
