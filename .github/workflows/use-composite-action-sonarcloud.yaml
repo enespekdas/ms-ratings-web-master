@@ -10,7 +10,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - id: SonarCloudTester
-        uses: enespekdas/composite-action-sonarcloud@v1.2
+        uses: enespekdas/composite-action-sonarcloud@v1.3
         with:
           SonarCloud_Project_Key: enespekdas_ms-ratings-web-master
           SonarCloud_Organizaton_Name: enespekdas
