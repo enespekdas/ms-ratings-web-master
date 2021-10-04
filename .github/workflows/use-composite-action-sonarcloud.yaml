@@ -15,8 +15,8 @@ jobs:
        
       - name: Checkout repository
         uses: actions/checkout@v2
-      - run: echo $SONAR_TOKEN , $GITHUB_TOKEN
-        shell: bash 
+    
+       
       - id: SonarCloudTester
         uses: enespekdas/composite-action-sonarcloud@v1.3
         with:
