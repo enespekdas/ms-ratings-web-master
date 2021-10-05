@@ -19,7 +19,7 @@ jobs:
     
        
       - id: AksDeploymentTest
-        uses: enespekdas/composite-action-aksdeployment@v1.4
+        uses: enespekdas/composite-action-aksdeployment@v1.5
         with:
           REGISTRY: $REGISTRY
           USER_NAME: $USER_NAME
