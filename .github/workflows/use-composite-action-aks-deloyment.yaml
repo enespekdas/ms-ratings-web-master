@@ -8,9 +8,7 @@ jobs:
     name: Testing Aks Deployment
     env:
       KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-      REGISTRY: quay.io
-      USER_NAME: swoturkey
-      IMAGE_NAME: swoturkey/ratings-web
+   
     steps:
        
        
@@ -19,11 +17,11 @@ jobs:
     
        
       - id: AksDeploymentTest
-        uses: enespekdas/composite-action-aksdeployment@v1.5
+        uses: enespekdas/composite-action-aksdeployment@v1.6
         with:
-          REGISTRY: $REGISTRY
-          USER_NAME: $USER_NAME
-          IMAGE_NAME: $IMAGE_NAME
+          REGISTRY: quay.io
+          USER_NAME: swoturkey
+          IMAGE_NAME: swoturkey/ratings-web
           KUBE_CONFIG: $KUBE_CONFIG
         
       - run: echo  ${{ steps.AksDeploymentTest.outputs.Result }} 
