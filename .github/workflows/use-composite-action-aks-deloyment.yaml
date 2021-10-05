@@ -1,13 +1,14 @@
 name: AKS Deployment Test
 
-on: [pull_request]
+on: [push]
 
 jobs:
   Aks_Deployment_Job:
     runs-on: ubuntu-latest
     name: Testing Aks Deployment
     env:
-      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }} 
+      K8S_URL: ${{ secrets.K8S_URL }} 
+      K8S_SECRET: ${{ secrets.K8S_SECRET }} 
     steps:
        
        
@@ -16,13 +17,13 @@ jobs:
     
        
       - id: AksDeploymentTest
-        uses: enespekdas/composite-action-aksdeployment@v1.7
+        uses: enespekdas/composite-action-aksdeployment@v2.0
         with:
           REGISTRY: quay.io
           USER_NAME: swoturkey
           IMAGE_NAME: swoturkey/ratings-web
-          KUBE_CONFIG: $KUBE_CONFIG
-        
+          K8S_URL: $K8S_URL
+          K8S_SECRET: $K8S_SECRET
       - run: echo  ${{ steps.AksDeploymentTest.outputs.Result }} 
         shell: bash
       - run: echo " Selam , bitti"
