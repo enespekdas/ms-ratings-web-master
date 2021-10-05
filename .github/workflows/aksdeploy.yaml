@@ -26,8 +26,8 @@ jobs:
         resource-group: springcloudrg
         token: '${{ secrets.SA_TOKEN }}'
        id: setcontext
-       run: kubectl get nodes
-       shell: bash
+     - name: get nodes
+       run: kubectl get nodes   
 
       
  
