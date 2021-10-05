@@ -1,19 +1,17 @@
-FROM node:13.5-alpine
+FROM fedora:latest
+LABEL maintainer Enes Pekdas <enes.pekdas@gmail.com>
 
-WORKDIR /usr/src/app
+RUN dnf install -y tar gzip gcc make \
+        && dnf clean all
 
-# Install build dependencies via apk
-RUN apk update && apk add python g++ make && rm -rf /var/cache/apk/*
+ADD http://ftpmirror.gnu.org/hello/hello-2.10.tar.gz /tmp/hello-2.10.tar.gz
 
-# Install node dependencies - done in a separate step so Docker can cache it
-COPY package*.json ./
-RUN npm install
+RUN tar xvzf /tmp/hello-2.10.tar.gz -C /opt
 
-# Copy project files into the image
-COPY . .
+WORKDIR /opt/hello-2.10
 
-# Expose port 8080, which is what the node process is listening to
-EXPOSE 8080
-
-# Set the startup command to 'npm start'
-CMD [ "npm", "start"] 
+RUN ./configure
+RUN make
+RUN make install
+RUN hello -v
+ENTRYPOINT "/usr/local/bin/hello"
