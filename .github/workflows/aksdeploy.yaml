@@ -1,6 +1,6 @@
 name: Docker
 
-on: [pull_request]
+on: [push]
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -11,23 +11,7 @@ env:
 
 
 jobs:
-  build:
-    #if: github.event_name != 'push'
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x]
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
- 
+
   deployToTest:
     #if: github.event_name != 'push'
     runs-on: ubuntu-latest
@@ -35,32 +19,18 @@ jobs:
       contents: read
       packages: write
     steps:
-      - name: Set context for Kubernetes 
-        uses: Azure/k8s-set-context@v1
-        with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Run Helm Command
-        run: 'helm upgrade -i -f charts/values.yaml ratings-web-test --values charts/values-test.yaml charts/ -n ratings-app-test'
+     - uses: azure/k8s-set-context@v1
+       with:
+        method: service-account
+        cluster-type: 'arc'
+        cluster-name: internal
+        resource-group: springcloudrg
+        token: '${{ secrets.SA_TOKEN }}'
+       id: setcontext
+       run: kubectl get nodes
+       shell: bash
+
       
  
-  deployToProd:
-    #if: github.event_name != 'push'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - name: Set context for Kubernetes 
-        uses: Azure/k8s-set-context@v1
-        with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Run Helm Command
-        run: 'helm upgrade -i -f charts/values.yaml ratings-web-prod --values charts/values-prod.yaml charts/ -n ratings-app-prod'
-      - name: Get Kubernetes Components
-        run: kubectl get all --namespace=ratings-app-prod
-        
+  
       
