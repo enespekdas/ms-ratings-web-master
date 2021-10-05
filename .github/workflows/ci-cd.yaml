@@ -1,0 +1,35 @@
+name: CI CD  Test
+on: [push]
+jobs:
+  Aks_Deployment_Job:
+    runs-on: ubuntu-latest
+    name: Testing CI CD
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:  
+      - name: Checkout repositorys
+        uses: actions/checkout@v2
+    
+       
+      - id: CI_CD 
+        uses: enespekdas/composite-action-CI-CD@v1.0
+        with:
+          SONARCLOUD_Project_Key: enespekdas_ms-ratings-web-master
+          SONARCLOUD_Organizaton_Name: enespekdas
+          SONAR_TOKEN: $SONAR_TOKEN
+          GITHUB_TOKEN: $GITHUB_TOKEN
+          DOCKER_USERNAME: enespekdas
+          DOCKER_PASSWORD: en.141220
+          DOCKER_IMAGE_NAME: selam
+          DOCKER_Repository_Project_Tag: action-test
+          DOCKER_Repository_Project_version: latest
+          REGISTRY: quay.io
+          USER_NAME: swoturkey
+          IMAGE_NAME: swoturkey/ratings-web
+          K8S_URL: ${{ secrets.K8S_URL }} 
+          K8S_SECRET: ${{ secrets.K8S_SECRET }}
+      - run: echo  ${{ steps.CI_CD.outputs.Result }} 
+        shell: bash
+      - run: echo " Selam , bitti"
+        shell: bash
