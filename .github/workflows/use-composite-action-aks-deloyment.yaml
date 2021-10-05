@@ -6,9 +6,7 @@ jobs:
   Aks_Deployment_Job:
     runs-on: ubuntu-latest
     name: Testing Aks Deployment
-    env:
-      K8S_URL: ${{ secrets.K8S_URL }} 
-      K8S_SECRET: ${{ secrets.K8S_SECRET }} 
+    
     steps:
        
        
@@ -22,8 +20,8 @@ jobs:
           REGISTRY: quay.io
           USER_NAME: swoturkey
           IMAGE_NAME: swoturkey/ratings-web
-          K8S_URL: $K8S_URL
-          K8S_SECRET: $K8S_SECRET
+          K8S_URL: ${{ secrets.K8S_URL }} 
+          K8S_SECRET: ${{ secrets.K8S_SECRET }}
       - run: echo  ${{ steps.AksDeploymentTest.outputs.Result }} 
         shell: bash
       - run: echo " Selam , bitti"
