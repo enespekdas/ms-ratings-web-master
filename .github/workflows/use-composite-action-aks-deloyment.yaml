@@ -7,8 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Testing Aks Deployment
     env:
-      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-   
+      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }} 
     steps:
        
        
@@ -17,7 +16,7 @@ jobs:
     
        
       - id: AksDeploymentTest
-        uses: enespekdas/composite-action-aksdeployment@v1.6
+        uses: enespekdas/composite-action-aksdeployment@v1.7
         with:
           REGISTRY: quay.io
           USER_NAME: swoturkey
