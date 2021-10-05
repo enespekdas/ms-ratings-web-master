@@ -20,11 +20,9 @@ jobs:
     steps:
      - uses: azure/k8s-set-context@v1
        with:
-        method: service-account
-        cluster-type: 'arc'
-        cluster-name: internal
-        resource-group: springcloudrg
-        token: '${{ secrets.SA_TOKEN }}'
+         method: service-account
+         k8s-url: ${{secrets.K8S_URL}}
+         k8s-secret: ${{ secrets.SA_TOKEN }}
        id: setcontext
      - name: get nodes
        run: kubectl get nodes   
