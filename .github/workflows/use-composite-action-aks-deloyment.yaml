@@ -15,7 +15,7 @@ jobs:
     
        
       - id: AksDeploymentTest
-        uses: enespekdas/composite-action-aksdeployment@v2.0
+        uses: enespekdas/composite-action-aksdeployment@v2.1
         with:
           REGISTRY: quay.io
           USER_NAME: swoturkey
